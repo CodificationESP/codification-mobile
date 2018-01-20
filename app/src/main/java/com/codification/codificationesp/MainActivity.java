@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +43,35 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ArrayList<Batiment> listebatiments = new ArrayList<>();
+        ArrayList<Chambre> listechambresA = new ArrayList<>();
+        ArrayList<Chambre> listechambresB = new ArrayList<>();
+        Chambre ch1 = new Chambre( "1");
+        Chambre ch2 = new Chambre( "2");
+        Chambre ch3 = new Chambre( "3");
+        Chambre ch4 = new Chambre( "4");
+        Chambre ch5 = new Chambre("5");
+        Chambre ch6 = new Chambre("6");
+        listechambresA.add(ch1);
+        listechambresA.add(ch2);
+        listechambresA.add(ch3);
+        listechambresA.add(ch4);
+        listechambresA.add(ch5);
+        listechambresA.add(ch6);
+        listechambresA.add(new Chambre("7"));
+        listechambresA.add(new Chambre("8"));
+        listechambresA.add(new Chambre("9"));
+
+        listechambresB.add(ch1);
+        listechambresB.add(ch2);
+        Batiment A = new Batiment( "A",  listechambresA);
+        Batiment B = new Batiment( "B",  listechambresB);
+        listebatiments.add(A);
+        listebatiments.add(B);
+        ListBatimentAdapter adapterbatiment = new ListBatimentAdapter(listebatiments,this);
+        ListView l = (ListView) findViewById(R.id.l);
+        l.setAdapter(adapterbatiment);
     }
 
     @Override
@@ -80,17 +112,15 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_chdispo) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_codifier) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_reserver) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_deconnecter) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_accueil) {
 
         }
 

@@ -3,21 +3,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_accueil"
             android:icon="@drawable/ic_menu_manage"
             android:title="Accueil" />
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_chdispo"
             android:icon="@drawable/ic_menu_camera"
             android:title="Chambres disponibles" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_codifier"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Codifier" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_reserver"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Reserver" />
+        <item
+            android:id="@+id/nav_deconnecter"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Se deconnecter" />
 
     </group>
 
