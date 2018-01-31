@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ListView l = (ListView) findViewById(R.id.l);
+        AccueilAdapter adapterbatiment = new AccueilAdapter(context);
+        l.setAdapter(adapterbatiment);
 
     }
 
@@ -118,11 +121,16 @@ public class MainActivity extends AppCompatActivity
                                 if (response.isSuccessful()){
                                     final Reservation reservation = response.body().getReservation();
                                         if (response.isSuccessful()){
-                                                Chambre chambre = new Chambre(reservation.getChambreId(),reservation.getChambre().getNomchambre(),reservation.getChambre().getCouloirId());
-                                                CodiferChambreAdapter adapterchambre = new CodiferChambreAdapter(chambre,context);
-                                                ListView l = (ListView) findViewById(R.id.l);
-                                                l.setAdapter(adapterchambre);
-                                                Log.d("getreservation ","failure");
+                                                if (reservation != null) {
+                                                    Chambre chambre = new Chambre(reservation.getChambreId(), reservation.getChambre().getNomchambre(), reservation.getChambre().getCouloirId());
+                                                    CodiferChambreAdapter adapterchambre = new CodiferChambreAdapter(chambre, context);
+                                                    ListView l = (ListView) findViewById(R.id.l);
+                                                    l.setAdapter(adapterchambre);
+                                                    Log.d("getreservation ", "failure");
+                                                }
+                                                else {
+                                                    bdialog("Reservée une chambre d'abord");
+                                                }
                                         }
 
                                 }else{
@@ -191,7 +199,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_accueil) {
-
+            ListView l = (ListView) findViewById(R.id.l);
+            AccueilAdapter adapterbatiment = new AccueilAdapter(context);
+            l.setAdapter(adapterbatiment);
 
         }
 

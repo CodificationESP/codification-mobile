@@ -17,6 +17,9 @@ public interface EtudiantInterface {
     @GET("etudiants/{id}?filter={\"include\" : { \"reservation\": \"chambre\" }}")
     Call<Etudiant> getEtudiantAvecReservation(@Path("id") String id);
 
+    @POST("utilisateurs/")
+    Call<User> creerutilisateur(@Body User user);
+
     @POST("etudiants/")
     Call<Etudiant> creeretudiant(@Body Etudiant etud);
 

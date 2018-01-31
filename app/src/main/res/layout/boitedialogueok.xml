@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -17,6 +18,9 @@
         android:id="@+id/buttonok"
         android:layout_width="178dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="ok" />
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#FF0F4B92"
+        android:text="ok"
+        android:textColor="@android:color/background_light" />
 </LinearLayout>

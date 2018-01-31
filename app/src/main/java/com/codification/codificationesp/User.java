@@ -13,5 +13,24 @@ public class User {
     @SerializedName("password")
     String motdepasse;
 
+    @SerializedName("email")
+    String email;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @SerializedName("id")
+    private transient int id;
+
+
+    public User(String login, String motdepasse, String email) {
+        this.login = login;
+        this.motdepasse = motdepasse;
+        this.email = email;
+    }
 }

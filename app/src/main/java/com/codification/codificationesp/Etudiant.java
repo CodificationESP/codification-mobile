@@ -8,7 +8,7 @@ public class Etudiant {
     private String numEtudiant;
     private String prenomEtudiant;
     private String nomEtudiant;
-    private String ddn;
+    private String dateNaissance;
     private String login;
     private String motdepasse;
     private String formation;
@@ -17,6 +17,16 @@ public class Etudiant {
     private String departement;
     private String email;
     private int utilisateurId;
+
+    public int getUtilisateurId() {
+        return utilisateurId;
+    }
+
+    public void setUtilisateurId(int utilisateurId) {
+        this.utilisateurId = utilisateurId;
+    }
+
+
 
     public Reservation getReservation() {
         return reservation;
@@ -32,7 +42,7 @@ public class Etudiant {
         this.numEtudiant = numetudiant;
         this.prenomEtudiant = prenometudiant;
         this.nomEtudiant = nometudiant;
-        this.ddn = ddn;
+        this.dateNaissance = ddn;
         this.login = login;
         this.motdepasse = motdepasse;
         this.formation = formation;
@@ -69,11 +79,11 @@ public class Etudiant {
     }
 
     public String getDdn() {
-        return ddn;
+        return dateNaissance;
     }
 
     public void setDdn(String ddn) {
-        this.ddn = ddn;
+        this.dateNaissance = ddn;
     }
 
     public String getLogin() {

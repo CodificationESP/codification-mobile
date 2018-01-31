@@ -1,6 +1,8 @@
 package com.codification.codificationesp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
     String url = "https://codification.herokuapp.com/api/";
     Etudiant etudiant = new Etudiant();
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +35,6 @@ public class InscriptionActivity extends AppCompatActivity {
         Spinner dropdowndep = (Spinner)findViewById(R.id.spinnerdepartement);
         Spinner dropdownform = (Spinner)findViewById(R.id.spinnerformation);
         Spinner dropdownniv = (Spinner)findViewById(R.id.spinnerniveau);
-
-        EditText numetudiant = (EditText) findViewById(R.id.editTextnumetudiant);
-        EditText login = (EditText) findViewById(R.id.editTextusername);
-        EditText nometudiant = (EditText) findViewById(R.id.editTextnom);
-        EditText prenometudiant = (EditText) findViewById(R.id.editTextprenom);
-        EditText emailetudiant = (EditText) findViewById(R.id.editTextemail);
-        EditText ddnetudiant = (EditText) findViewById(R.id.editTextddn);
-        EditText mdp = (EditText) findViewById(R.id.editTextpassword);
-        EditText confirmdp = (EditText) findViewById(R.id.editTextcpwd);
-
-        etudiant.setNumetudiant(numetudiant.getText().toString());
-        etudiant.setLogin(login.getText().toString());
-        etudiant.setNometudiant(nometudiant.getText().toString());
-        etudiant.setPrenometudiant(prenometudiant.getText().toString());
-        etudiant.setEmail(emailetudiant.getText().toString());
-        etudiant.setDdn(ddnetudiant.getText().toString());
-        etudiant.setMotdepasse(mdp.getText().toString());
 
         String[] itemsdep = new String[]{"Genie informatique","Genie civil", "Genie mecanique","Genie electrique","Gestion"};
         final ArrayAdapter<String> adapterdep = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsdep);
@@ -113,32 +99,72 @@ public class InscriptionActivity extends AppCompatActivity {
         bconfirmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText numetudiant = (EditText) findViewById(R.id.editTextnumetudiant);
+                EditText login = (EditText) findViewById(R.id.editTextusername);
+                EditText nometudiant = (EditText) findViewById(R.id.editTextnom);
+                EditText prenometudiant = (EditText) findViewById(R.id.editTextprenom);
+                EditText emailetudiant = (EditText) findViewById(R.id.editTextemail);
+                EditText ddnetudiant = (EditText) findViewById(R.id.editTextddn);
+                EditText mdp = (EditText) findViewById(R.id.editTextpassword);
+//                EditText confirmdp = (EditText) findViewById(R.id.editTextcpwd);
 
+                etudiant.setNumetudiant(numetudiant.getText().toString());
+                etudiant.setLogin(login.getText().toString());
+                etudiant.setNometudiant(nometudiant.getText().toString());
+                etudiant.setPrenometudiant(prenometudiant.getText().toString());
+                etudiant.setEmail(emailetudiant.getText().toString());
+                etudiant.setDdn(ddnetudiant.getText().toString());
+                etudiant.setMotdepasse(mdp.getText().toString());
+
+                User user = new User(login.getText().toString(),mdp.getText().toString(),emailetudiant.getText().toString());
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(url)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
+                final EtudiantInterface client = retrofit.create(EtudiantInterface.class);
 
-                EtudiantInterface client = retrofit.create(EtudiantInterface.class);
-                client.creeretudiant(etudiant).enqueue(new Callback<Etudiant>() {
-                    @Override
-                    public void onResponse(Call<Etudiant> call, Response<Etudiant> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("InscriptionActivity", "inscription success");
-                            Etudiant etudiant = response.body();
-                            Intent intent = new Intent(InscriptionActivity.this,
-                                    MainActivity.class);
-                            startActivity(intent);
-                            //SharedPreferences(user);
-                        }else{
-                            Log.d("InscriptionActivity", "inscription failure");
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Etudiant> call, Throwable t) {
-                        Log.d("LoginActivity", "connection failure");
-                    }
-                });
+//                client.creerutilisateur(user).enqueue(new Callback<User>() {
+//                    @Override
+//                    public void onResponse(Call<User> call, Response<User> response) {
+//                        if (response.isSuccessful()){
+//                            etudiant.setUtilisateurId(response.body().getId());
+                            etudiant.setUtilisateurId(21);
+                            client.creeretudiant(etudiant).enqueue(new Callback<Etudiant>() {
+                                @Override
+                                public void onResponse(Call<Etudiant> call, Response<Etudiant> response) {
+                                    if (response.isSuccessful()) {
+                                        Log.d("InscriptionActivity", "inscription success");
+                                        Etudiant etudiant = response.body();
+                                        SharedPreferences sharedPref = context.getSharedPreferences(
+                                                "user_info", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putString("idetudiant",response.body().getNumetudiant());
+                                        editor.apply();
+                                        Intent intent = new Intent(InscriptionActivity.this,
+                                                MainActivity.class);
+                                        startActivity(intent);
+
+                                    }else{
+                                        Log.d("InscriptionActivity", "inscription failure");
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Etudiant> call, Throwable t) {
+                                    Log.d("LoginActivity", "connection failure");
+                                }
+                            });
+
+//                        } else{
+//                           Log.d("inscription user","failure");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<User> call, Throwable t) {
+//
+//                    }
+//                });
+
             }
         });
 
