@@ -11,18 +11,30 @@ import android.widget.GridLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
- * Created by Arame on 20/01/2018.
+ * Created by Arame on 24/01/2018.
  */
 
-public class ListBatimentAdapter extends BaseAdapter {
+public class ListBatimentReserverAdapter extends BaseAdapter{
     List<Batiment> listebatiments;
     private Context context;
     private AlertDialog dialogue = null;
+    String url = "https://codification.herokuapp.com/api/";
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
-    public ListBatimentAdapter(List<Batiment> listebatiments, Context context) {
+    public ListBatimentReserverAdapter(List<Batiment> listebatiments, Context context) {
         this.listebatiments = listebatiments;
         this.context = context;
     }
@@ -59,7 +71,7 @@ public class ListBatimentAdapter extends BaseAdapter {
         final Batiment batiment = (Batiment) getItem(position);
         TextView nom = (TextView) vue.findViewById(R.id.textViewnombatiment);
         nom.setText(" "+batiment.getNombatiment());
-        final List<Chambre> chambres = batiment.getChambresbatiment();
+        final List<Chambre> chambres = batiment.getChambres();
         GridLayout gridlayoutchambres = (GridLayout) vue.findViewById(R.id.gridlayoutchambre);
         for(int i=0; i<chambres.size(); i++){
 
@@ -70,6 +82,12 @@ public class ListBatimentAdapter extends BaseAdapter {
             gridlayoutchambres.setRowCount(nbrow);
             gridlayoutchambres.setColumnCount(4);
             gridlayoutchambres.addView(button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
 
         return vue;
@@ -82,7 +100,47 @@ public class ListBatimentAdapter extends BaseAdapter {
         Button buttonconfirm = (Button) dialogView.findViewById(R.id.buttonconfirmer);
         Button buttonannuler = (Button) dialogView.findViewById(R.id.buttonannuler);
         message.setText(mess);
+        buttonconfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Reservation reservation = new Reservation(  new Date(),  "reserver",  "2014pn", 31);
+                EtudiantInterface client = retrofit.create(EtudiantInterface.class);
+                client.reserveretudiant("2014pn",reservation).enqueue(new Callback<Reservation>() {
+                    @Override
+                    public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                        bdialogReussite("codification reussie");
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Reservation> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
         buttonannuler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogue.dismiss();
+
+            }
+        });
+        builder.setView(dialogView);
+        dialogue = builder.create();
+        dialogue.show();
+    }
+
+    protected void  bdialogReussite (String mess) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.boitedialogueok, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        TextView message = (TextView) dialogView.findViewById(R.id.textViewmessageok);
+        Button buttonok = (Button) dialogView.findViewById(R.id.buttonok);
+        message.setText(mess);
+
+        buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogue.dismiss();

@@ -5,18 +5,38 @@ package com.codification.codificationesp;
  */
 
 public class Chambre {
-    private String numchambre;
+    private int idChambre;
+    private String nomChambre;
+    private int couloirId;
 
-    public Chambre(String numchambre) {
-        this.numchambre = numchambre;
+    public Chambre(int id, String numchambre,int idcouloir) {
+        this.nomChambre = numchambre;
+        this.idChambre = id;
+        this.couloirId = idcouloir;
+
     }
 
-    public String getNumchambre() {
-        return numchambre;
+    public int getCouloirId() {
+        return couloirId;
     }
 
-    public void setNumchambre(String numchambre) {
-        this.numchambre = numchambre;
+    public void setCouloirId(int couloirId) {
+        this.couloirId = couloirId;
+    }
+
+    public String getNomchambre() {
+        return nomChambre;
+    }
+
+    public void setNomchambre(String numchambre) {
+        this.nomChambre = numchambre;
+    }
+    public int getId() {
+        return idChambre;
+    }
+
+    public void setId(int id) {
+        this.idChambre = id;
     }
 
 }

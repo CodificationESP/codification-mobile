@@ -4,38 +4,34 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_accueil"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="Accueil" />
         <item
-            android:id="@+id/nav_chdispo"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Chambres disponibles" />
+            android:id="@+id/nav_reserver"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Reserver" />
         <item
             android:id="@+id/nav_codifier"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Codifier" />
         <item
-            android:id="@+id/nav_reserver"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Reserver" />
-        <item
             android:id="@+id/nav_deconnecter"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="?android:attr/homeAsUpIndicator"
             android:title="Se deconnecter" />
 
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="Send" />-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>
